@@ -142,6 +142,19 @@
          <column autoUpdated="false" defaultValue="null" digits="0" id="30" name="za_umftte" nullable="true" remarks="" size="0" type="numeric" typeCode="2"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="31" name="pt_etat" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
       </table>
+      <table name="bo_fiabilisation_etude" numRows="0" remarks="Boites optiques etude à fiabiliser sur le terrain" schema="athd" type="VIEW" viewSql=" SELECT a.bo_id,&#10;    c.geom,&#10;    a.pt_id,&#10;    d.pt_code,&#10;    d.pt_type,&#10;    b.avancement_terrain,&#10;    b.commentaire_terrain,&#10;    b.url,&#10;    b.elag_id,&#10;    b.avancement_etude,&#10;    b.commentaire_etude&#10;   FROM (((athd.t_bo a&#10;     JOIN athd.t_bo_fiabilisation_etude b ON ((a.bo_id = b.bo_id)))&#10;     JOIN athd.t_bo_etude d ON ((a.bo_id = d.bo_id)))&#10;     JOIN athd.t_pt c ON ((c.pt_id = a.pt_id)));">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="bo_id" nullable="true" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="geom" nullable="true" remarks="" size="2147483647" type="geometry" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="pt_id" nullable="true" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="pt_code" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="pt_type" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="avancement_terrain" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="commentaire_terrain" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="7" name="url" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="8" name="elag_id" nullable="true" remarks="" size="10" type="_int4" typeCode="2003"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="9" name="avancement_etude" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="10" name="commentaire_etude" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+      </table>
       <table name="bo_fiabilisation_exi" numRows="0" remarks="Boites optiques existantes à fiabiliser sur le terrain" schema="athd" type="VIEW" viewSql=" SELECT a.bo_id,&#10;    c.geom,&#10;    b.avancement,&#10;    b.nb_reserve,&#10;    d.pt_code,&#10;    d.cbl_ent,&#10;    b.commentaire,&#10;    b.nc_etat,&#10;    b.nc_type,&#10;    b.nc_date_envoi,&#10;    b.nc_retour_client,&#10;    b.nc_commentaire&#10;   FROM (((athd.t_bo a&#10;     JOIN athd.t_bo_fiabilisation_exi b ON ((a.bo_id = b.bo_id)))&#10;     JOIN athd.t_bo_etude d ON ((a.bo_id = d.bo_id)))&#10;     JOIN athd.t_pt c ON ((c.pt_id = a.pt_id)));">
          <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="bo_id" nullable="true" remarks="" size="10" type="int4" typeCode="4"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="geom" nullable="true" remarks="" size="2147483647" type="geometry" typeCode="1111"/>
@@ -1457,29 +1470,30 @@
          <column autoUpdated="false" defaultValue="null" digits="0" id="19" name="num_equipe_piq" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="20" name="num_equipe_gc" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
       </table>
-      <table name="pt_comac_auto" numRows="0" remarks="Détermine le reste à faire en Comac" schema="athd" type="VIEW" viewSql=" SELECT DISTINCT a.pt_id,&#10;    a.geom,&#10;    i.nom AS zpm,&#10;    c.numero,&#10;    c.artere,&#10;    c.taux_utilisation,&#10;        CASE&#10;            WHEN (c.pt_id IS NOT NULL) THEN true&#10;            ELSE false&#10;        END AS correspondance_comac,&#10;    h.photo_ensemble,&#10;    h.photo_portee,&#10;    h.photo_vue_tete,&#10;    h.photo_etiquette,&#10;    h.photo_complementaire_1,&#10;    h.photo_complementaire_2,&#10;    h.photo_complementaire_3,&#10;    h.photo_complementaire_4,&#10;    h.photo_complementaire_5,&#10;    h.photo_complementaire_6,&#10;    h.photo_complementaire_7,&#10;    h.photo_complementaire_8,&#10;    h.photo_complementaire_9&#10;   FROM ((((athd.t_pt a&#10;     JOIN athd.t_pt_etude b ON ((a.pt_id = b.pt_id)))&#10;     JOIN athd.t_pt_piquetage h ON ((h.pt_id = b.pt_id)))&#10;     LEFT JOIN athd.comac c ON ((b.pt_id = c.pt_id)))&#10;     JOIN athd.t_zpm i ON (st_intersects(i.geom, a.geom)))&#10;  WHERE ((a.gestionnaire = 'ENEDIS'::text) AND (a.structure = 'APPUI'::text));">
+      <table name="pt_comac_auto" numRows="0" remarks="Détermine le reste à faire en Comac" schema="athd" type="VIEW" viewSql=" SELECT DISTINCT a.pt_id,&#10;    a.geom,&#10;    i.nom AS zpm,&#10;    c.numero,&#10;    a.gestionnaire,&#10;    c.artere,&#10;    c.taux_utilisation,&#10;        CASE&#10;            WHEN (c.pt_id IS NOT NULL) THEN true&#10;            ELSE false&#10;        END AS correspondance_comac,&#10;    h.photo_ensemble,&#10;    h.photo_portee,&#10;    h.photo_vue_tete,&#10;    h.photo_etiquette,&#10;    h.photo_complementaire_1,&#10;    h.photo_complementaire_2,&#10;    h.photo_complementaire_3,&#10;    h.photo_complementaire_4,&#10;    h.photo_complementaire_5,&#10;    h.photo_complementaire_6,&#10;    h.photo_complementaire_7,&#10;    h.photo_complementaire_8,&#10;    h.photo_complementaire_9&#10;   FROM ((((athd.t_pt a&#10;     JOIN athd.t_pt_etude b ON ((a.pt_id = b.pt_id)))&#10;     LEFT JOIN athd.t_pt_piquetage h ON ((h.pt_id = b.pt_id)))&#10;     LEFT JOIN athd.comac c ON ((b.pt_id = c.pt_id)))&#10;     JOIN athd.t_zpm i ON (st_intersects(i.geom, a.geom)))&#10;  WHERE (((a.gestionnaire = 'ENEDIS'::text) OR (a.gestionnaire = 'AODE'::text)) AND (a.structure = 'APPUI'::text));">
          <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="pt_id" nullable="true" remarks="" size="10" type="int4" typeCode="4"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="geom" nullable="true" remarks="" size="2147483647" type="geometry" typeCode="1111"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="zpm" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="numero" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="artere" nullable="true" remarks="" size="2147483647" type="text" typeCode="12">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="gestionnaire" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="artere" nullable="true" remarks="" size="2147483647" type="text" typeCode="12">
             <parent column="artere" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="athd" table="t_suivi_comac"/>
          </column>
-         <column autoUpdated="false" defaultValue="null" digits="2" id="5" name="taux_utilisation" nullable="true" remarks="" size="10" type="numeric" typeCode="2"/>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="correspondance_comac" nullable="true" remarks="" size="1" type="bool" typeCode="-7"/>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="7" name="photo_ensemble" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="8" name="photo_portee" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="9" name="photo_vue_tete" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="10" name="photo_etiquette" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="11" name="photo_complementaire_1" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="12" name="photo_complementaire_2" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="13" name="photo_complementaire_3" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="14" name="photo_complementaire_4" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="15" name="photo_complementaire_5" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="16" name="photo_complementaire_6" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="17" name="photo_complementaire_7" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="18" name="photo_complementaire_8" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="19" name="photo_complementaire_9" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="2" id="6" name="taux_utilisation" nullable="true" remarks="" size="10" type="numeric" typeCode="2"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="7" name="correspondance_comac" nullable="true" remarks="" size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="8" name="photo_ensemble" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="9" name="photo_portee" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="10" name="photo_vue_tete" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="11" name="photo_etiquette" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="12" name="photo_complementaire_1" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="13" name="photo_complementaire_2" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="14" name="photo_complementaire_3" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="15" name="photo_complementaire_4" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="16" name="photo_complementaire_5" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="17" name="photo_complementaire_6" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="18" name="photo_complementaire_7" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="19" name="photo_complementaire_8" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="20" name="photo_complementaire_9" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
       </table>
       <table name="pt_comac_travaux" numRows="0" remarks="Appuis calculés via Comac nécessitants un doublement" schema="athd" type="VIEW" viewSql=" SELECT DISTINCT a.pt_id,&#10;    a.geom,&#10;    a.insee,&#10;    a.nom,&#10;    a.gestionnaire,&#10;    a.domanialite,&#10;    c.zpm,&#10;    c.artere,&#10;    c.taux_utilisation,&#10;    h.pt_id_doublement,&#10;    i.nom AS nom_doublement,&#10;    i.modele AS modele_doublement,&#10;    st_astext(i.geom) AS geom_doublement,&#10;    h.date_prev_retrait,&#10;    h.date_retrait,&#10;    h.date_prev_travaux,&#10;    h.date_travaux,&#10;    h.commentaire&#10;   FROM ((((athd.t_pt a&#10;     JOIN athd.t_pt_etude b ON ((a.pt_id = b.pt_id)))&#10;     LEFT JOIN athd.comac c ON ((b.pt_id = c.pt_id)))&#10;     LEFT JOIN athd.t_pt_comac_travaux h ON ((a.pt_id = h.pt_id)))&#10;     LEFT JOIN athd.t_pt i ON ((i.pt_id = h.pt_id_doublement)))&#10;  WHERE (((a.gestionnaire = 'ENEDIS'::text) AND (a.structure = 'APPUI'::text) AND (c.taux_utilisation &gt; (100)::numeric) AND (c.taux_utilisation IS NOT NULL)) OR ((a.structure = 'APPUI'::text) AND (b.pt_prop = 'RAUV'::text) AND (b.pt_gest = 'ATHD'::text) AND (b.pt_avct = 'C'::text) AND (b.pt_comment ~~ '%IMPLANTATION COMAC SUPPLEMENTAIRE%'::text)));">
          <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="pt_id" nullable="true" remarks="" size="10" type="int4" typeCode="4"/>
@@ -1829,7 +1843,7 @@
          <column autoUpdated="false" defaultValue="null" digits="0" id="17" name="owf_validation" nullable="true" remarks="" size="13" type="date" typeCode="91"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="18" name="owf_abandon" nullable="true" remarks="" size="13" type="date" typeCode="91"/>
       </table>
-      <table name="suivi_comac" numRows="0" remarks="Suivi par ZPM des COMAC puis par artère une fois déclaré" schema="athd" type="VIEW" viewSql=" WITH requete AS (&#10;         SELECT DISTINCT COALESCE(c_1.artere, i.nom) AS artere,&#10;                CASE&#10;                    WHEN (c_1.artere IS NOT NULL) THEN st_collect(a_1.geom)&#10;                    ELSE i.geom&#10;                END AS geom,&#10;            count(a_1.pt_id) AS nb_comac,&#10;            c_1.zpm&#10;           FROM ((((athd.t_pt a_1&#10;             JOIN athd.t_pt_etude b_1 ON ((a_1.pt_id = b_1.pt_id)))&#10;             LEFT JOIN athd.comac c_1 ON ((b_1.pt_id = c_1.pt_id)))&#10;             JOIN athd.t_zpm i ON (st_intersects(i.geom, a_1.geom)))&#10;             JOIN athd.t_zpm_etude g ON ((i.zpm_id = g.zpm_id)))&#10;          WHERE ((a_1.gestionnaire = 'ENEDIS'::text) AND (a_1.structure = 'APPUI'::text))&#10;          GROUP BY c_1.artere, i.nom, i.geom, c_1.zpm&#10;        )&#10; SELECT DISTINCT requete.artere,&#10;    COALESCE(requete.zpm, requete.artere) AS zpm,&#10;    (sum(requete.nb_comac))::integer AS nb_comac,&#10;        CASE&#10;            WHEN (length(requete.artere) &gt; 11) THEN st_buildarea(st_exteriorring(st_buffer(st_buffer(st_simplify(st_concavehull(st_collect(st_buffer(requete.geom, (0.0001)::double precision)), (0.99)::double precision), (0.0001)::double precision), ('-0.0001'::numeric)::double precision), (10)::double precision)))&#10;            ELSE st_collect(requete.geom)&#10;        END AS geom,&#10;    d.etude_pro_date_prev,&#10;    d.etude_pro_date,&#10;    d.liaison_date_prev,&#10;    d.liaison_date,&#10;    COALESCE(a.prod_ressource, b.prod_ressource) AS prod_ressource,&#10;    COALESCE(a.prod_envoi, b.prod_envoi) AS prod_envoi,&#10;    COALESCE(a.prod_prev, b.prod_prev) AS prod_prev,&#10;    COALESCE(a.prod_reception, b.prod_reception) AS prod_reception,&#10;    COALESCE(a.prod_controle, b.prod_controle) AS prod_controle,&#10;    COALESCE(a.prod_commentaire, b.prod_commentaire) AS prod_commentaire,&#10;    COALESCE(a.eplan_go_depose, b.eplan_go_depose) AS eplan_go_depose,&#10;    COALESCE(a.eplan_depose, b.eplan_depose) AS eplan_depose,&#10;    COALESCE(a.eplan_validation, b.eplan_validation) AS eplan_validation,&#10;    COALESCE(a.eplan_abandon, b.eplan_abandon) AS eplan_abandon&#10;   FROM ((((requete&#10;     LEFT JOIN athd.t_suivi_comac a ON ((a.artere = requete.artere)))&#10;     LEFT JOIN athd.t_suivi_comac b ON ((b.artere = requete.zpm)))&#10;     LEFT JOIN athd.t_zpm c ON ((c.nom = requete.zpm)))&#10;     LEFT JOIN athd.t_zpm_suivi d ON ((c.zpm_id = d.zpm_id)))&#10;  GROUP BY requete.artere, requete.zpm, a.prod_ressource, b.prod_ressource, a.prod_envoi, b.prod_envoi, a.prod_prev, b.prod_prev, a.prod_reception, b.prod_reception, a.prod_controle, b.prod_controle, a.prod_commentaire, b.prod_commentaire, a.eplan_go_depose, b.eplan_go_depose, a.eplan_depose, b.eplan_depose, a.eplan_validation, b.eplan_validation, d.etude_pro_date_prev, d.etude_pro_date, a.eplan_abandon, b.eplan_abandon, d.liaison_date_prev, d.liaison_date;">
+      <table name="suivi_comac" numRows="0" remarks="Suivi par ZPM des COMAC puis par artère une fois déclaré" schema="athd" type="VIEW" viewSql=" WITH requete AS (&#10;         SELECT DISTINCT COALESCE(c_1.artere, i.nom) AS artere,&#10;                CASE&#10;                    WHEN (c_1.artere IS NOT NULL) THEN st_collect(a_1.geom)&#10;                    ELSE i.geom&#10;                END AS geom,&#10;            count(a_1.pt_id) AS nb_comac,&#10;            c_1.zpm&#10;           FROM ((((athd.t_pt a_1&#10;             JOIN athd.t_pt_etude b_1 ON ((a_1.pt_id = b_1.pt_id)))&#10;             LEFT JOIN athd.comac c_1 ON ((b_1.pt_id = c_1.pt_id)))&#10;             JOIN athd.t_zpm i ON (st_intersects(i.geom, a_1.geom)))&#10;             JOIN athd.t_zpm_etude g ON ((i.zpm_id = g.zpm_id)))&#10;          WHERE (((a_1.gestionnaire = 'ENEDIS'::text) OR (a_1.gestionnaire = 'AODE'::text)) AND (a_1.structure = 'APPUI'::text))&#10;          GROUP BY c_1.artere, i.nom, i.geom, c_1.zpm&#10;        )&#10; SELECT DISTINCT requete.artere,&#10;    COALESCE(requete.zpm, requete.artere) AS zpm,&#10;    (sum(requete.nb_comac))::integer AS nb_comac,&#10;        CASE&#10;            WHEN (length(requete.artere) &gt; 11) THEN st_buildarea(st_exteriorring(st_buffer(st_buffer(st_simplify(st_concavehull(st_collect(st_buffer(requete.geom, (0.0001)::double precision)), (0.99)::double precision), (0.0001)::double precision), ('-0.0001'::numeric)::double precision), (10)::double precision)))&#10;            ELSE st_collect(requete.geom)&#10;        END AS geom,&#10;    d.etude_pro_date_prev,&#10;    d.etude_pro_date,&#10;    d.liaison_date_prev,&#10;    d.liaison_date,&#10;    COALESCE(a.prod_ressource, b.prod_ressource) AS prod_ressource,&#10;    COALESCE(a.prod_envoi, b.prod_envoi) AS prod_envoi,&#10;    COALESCE(a.prod_prev, b.prod_prev) AS prod_prev,&#10;    COALESCE(a.prod_reception, b.prod_reception) AS prod_reception,&#10;    COALESCE(a.prod_controle, b.prod_controle) AS prod_controle,&#10;    COALESCE(a.prod_commentaire, b.prod_commentaire) AS prod_commentaire,&#10;    COALESCE(a.eplan_go_depose, b.eplan_go_depose) AS eplan_go_depose,&#10;    COALESCE(a.eplan_depose, b.eplan_depose) AS eplan_depose,&#10;    COALESCE(a.eplan_validation, b.eplan_validation) AS eplan_validation,&#10;    COALESCE(a.eplan_abandon, b.eplan_abandon) AS eplan_abandon&#10;   FROM ((((requete&#10;     LEFT JOIN athd.t_suivi_comac a ON ((a.artere = requete.artere)))&#10;     LEFT JOIN athd.t_suivi_comac b ON ((b.artere = requete.zpm)))&#10;     LEFT JOIN athd.t_zpm c ON ((c.nom = requete.zpm)))&#10;     LEFT JOIN athd.t_zpm_suivi d ON ((c.zpm_id = d.zpm_id)))&#10;  GROUP BY requete.artere, requete.zpm, a.prod_ressource, b.prod_ressource, a.prod_envoi, b.prod_envoi, a.prod_prev, b.prod_prev, a.prod_reception, b.prod_reception, a.prod_controle, b.prod_controle, a.prod_commentaire, b.prod_commentaire, a.eplan_go_depose, b.eplan_go_depose, a.eplan_depose, b.eplan_depose, a.eplan_validation, b.eplan_validation, d.etude_pro_date_prev, d.etude_pro_date, a.eplan_abandon, b.eplan_abandon, d.liaison_date_prev, d.liaison_date;">
          <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="artere" nullable="true" remarks="" size="2147483647" type="text" typeCode="12">
             <parent column="artere" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="athd" table="t_suivi_comac"/>
          </column>
@@ -1867,7 +1881,7 @@
          <column autoUpdated="false" defaultValue="null" digits="0" id="12" name="etude_pro_date_prev" nullable="true" remarks="" size="13" type="date" typeCode="91"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="13" name="etude_exe_date_prev" nullable="true" remarks="" size="13" type="date" typeCode="91"/>
       </table>
-      <table name="t_bo" numRows="20033" remarks="Configuration : Table mère contenant l'ensemble des boites optiques" schema="athd" type="TABLE">
+      <table name="t_bo" numRows="20385" remarks="Configuration : Table mère contenant l'ensemble des boites optiques" schema="athd" type="TABLE">
          <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="bo_id" nullable="false" remarks="" size="10" type="int4" typeCode="4">
             <child column="bo_id" foreignKey="t_bo_client_bo_id_fkey" implied="false" onDeleteCascade="true" schema="athd" table="t_bo_client"/>
             <child column="bo_id" foreignKey="t_bo_etude_bo_id_fkey" implied="false" onDeleteCascade="true" schema="athd" table="t_bo_etude"/>
@@ -1909,8 +1923,9 @@
             <column ascending="true" name="geom"/>
          </index>
       </table>
-      <table name="t_bo_etude" numRows="969" remarks="Configuration : Boites optiques projetés en étude" schema="athd" type="TABLE">
+      <table name="t_bo_etude" numRows="984" remarks="Configuration : Boites optiques projetés en étude" schema="athd" type="TABLE">
          <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="bo_id" nullable="false" remarks="" size="10" type="int4" typeCode="4">
+            <child column="bo_id" foreignKey="t_bo_fiabilisation_etude_bo_id_fkey" implied="false" onDeleteCascade="true" schema="athd" table="t_bo_fiabilisation_etude"/>
             <child column="bo_id" foreignKey="t_bo_fiabilisation_exi_bo_id_fkey" implied="false" onDeleteCascade="true" schema="athd" table="t_bo_fiabilisation_exi"/>
             <child column="bo_id" foreignKey="t_hub_bo_id_fkey" implied="false" onDeleteCascade="true" schema="athd" table="t_hub"/>
             <parent column="bo_id" foreignKey="t_bo_etude_bo_id_fkey" implied="false" onDeleteCascade="true" schema="athd" table="t_bo"/>
@@ -1959,6 +1974,21 @@
          <column autoUpdated="false" defaultValue="null" digits="0" id="42" name="pt_etat" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
          <primaryKey column="bo_id" sequenceNumberInPK="1"/>
          <index name="t_bo_etude_pkey" unique="true">
+            <column ascending="true" name="bo_id"/>
+         </index>
+      </table>
+      <table name="t_bo_fiabilisation_etude" numRows="0" remarks="Configuration : Boites optiques étude à fiabiliser sur le terrain" schema="athd" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="bo_id" nullable="false" remarks="" size="10" type="int4" typeCode="4">
+            <parent column="bo_id" foreignKey="t_bo_fiabilisation_etude_bo_id_fkey" implied="false" onDeleteCascade="true" schema="athd" table="t_bo_etude"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="avancement_terrain" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="commentaire_terrain" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="url" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="elag_id" nullable="true" remarks="" size="10" type="_int4" typeCode="2003"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="avancement_etude" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="commentaire_etude" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <primaryKey column="bo_id" sequenceNumberInPK="1"/>
+         <index name="t_bo_fiabilisation_etude_pkey" unique="true">
             <column ascending="true" name="bo_id"/>
          </index>
       </table>
@@ -2224,7 +2254,7 @@
             <column ascending="true" name="geom"/>
          </index>
       </table>
-      <table name="t_cm_aiguillage" numRows="2048" remarks="Configuration : Tronçons à traiter en aiguillage" schema="athd" type="TABLE">
+      <table name="t_cm_aiguillage" numRows="2087" remarks="Configuration : Tronçons à traiter en aiguillage" schema="athd" type="TABLE">
          <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="cm_id" nullable="false" remarks="" size="10" type="int4" typeCode="4">
             <parent column="cm_id" foreignKey="cm_aiguillage_cm_id_fkey" implied="false" onDeleteCascade="true" schema="athd" table="t_cm"/>
          </column>
@@ -2336,7 +2366,7 @@
             <column ascending="true" name="geom"/>
          </index>
       </table>
-      <table name="t_cm_etude" numRows="9697" remarks="Configuration : Tronçons projetés en étude" schema="athd" type="TABLE">
+      <table name="t_cm_etude" numRows="9707" remarks="Configuration : Tronçons projetés en étude" schema="athd" type="TABLE">
          <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="cm_id" nullable="false" remarks="" size="10" type="int4" typeCode="4">
             <parent column="cm_id" foreignKey="t_cm_etude_cm_id_fkey" implied="false" onDeleteCascade="true" schema="athd" table="t_cm"/>
          </column>
@@ -2385,7 +2415,7 @@
             <column ascending="true" name="geom"/>
          </index>
       </table>
-      <table name="t_cm_piquetage" numRows="29792" remarks="Configuration : Tronçons à traiter en piquetage" schema="athd" type="TABLE">
+      <table name="t_cm_piquetage" numRows="26511" remarks="Configuration : Tronçons à traiter en piquetage" schema="athd" type="TABLE">
          <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="cm_id" nullable="false" remarks="" size="10" type="int4" typeCode="4">
             <parent column="cm_id" foreignKey="cm_piquetage_cm_id_fkey" implied="false" onDeleteCascade="true" schema="athd" table="t_cm"/>
          </column>
@@ -2494,7 +2524,7 @@
             <column ascending="true" name="elag_id"/>
          </index>
       </table>
-      <table name="t_hub" numRows="1177" remarks="Configuration :  Table mère contenant l'ensemble des adductions" schema="athd" type="TABLE">
+      <table name="t_hub" numRows="1178" remarks="Configuration :  Table mère contenant l'ensemble des adductions" schema="athd" type="TABLE">
          <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="hub_id" nullable="false" remarks="" size="10" type="int4" typeCode="4">
             <child column="hub_id" foreignKey="t_hub_etude_hub_id_fkey" implied="false" onDeleteCascade="true" schema="athd" table="t_hub_etude"/>
          </column>
@@ -2512,7 +2542,7 @@
             <column ascending="true" name="lgmt_id"/>
          </index>
       </table>
-      <table name="t_hub_etude" numRows="1177" remarks="Configuration : Adductions projetés en étude" schema="athd" type="TABLE">
+      <table name="t_hub_etude" numRows="1178" remarks="Configuration : Adductions projetés en étude" schema="athd" type="TABLE">
          <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="hub_id" nullable="false" remarks="" size="10" type="int4" typeCode="4">
             <parent column="hub_id" foreignKey="t_hub_etude_hub_id_fkey" implied="false" onDeleteCascade="true" schema="athd" table="t_hub"/>
          </column>
@@ -2635,8 +2665,8 @@
       <table name="t_lgmt_etude" numRows="2976" remarks="Configuration : Logements projetés en étude" schema="athd" type="TABLE">
          <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="lgmt_id" nullable="false" remarks="" size="10" type="int4" typeCode="4">
             <child column="lgmt_id" foreignKey="t_hub_lgmt_id_fkey" implied="false" onDeleteCascade="true" schema="athd" table="t_hub"/>
-            <parent column="lgmt_id" foreignKey="t_logement_etude_lgmt_piquetage_id_fkey" implied="false" onDeleteCascade="true" schema="athd" table="t_lgmt_piquetage"/>
             <parent column="lgmt_id" foreignKey="t_logement_etude_lgmt_id_fkey" implied="false" onDeleteCascade="true" schema="athd" table="t_lgmt"/>
+            <parent column="lgmt_id" foreignKey="t_logement_etude_lgmt_piquetage_id_fkey" implied="false" onDeleteCascade="true" schema="athd" table="t_lgmt_piquetage"/>
          </column>
          <primaryKey column="lgmt_id" sequenceNumberInPK="1"/>
          <index name="t_logement_etude_pkey" unique="true">
@@ -2696,7 +2726,7 @@
             <column ascending="true" name="geom"/>
          </index>
       </table>
-      <table name="t_lgmt_piquetage" numRows="8480" remarks="Configuration : Logements à traiter en relevé" schema="athd" type="TABLE">
+      <table name="t_lgmt_piquetage" numRows="6542" remarks="Configuration : Logements à traiter en relevé" schema="athd" type="TABLE">
          <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="lgmt_id" nullable="false" remarks="" size="10" type="int4" typeCode="4">
             <child column="lgmt_id" foreignKey="t_logement_etude_lgmt_piquetage_id_fkey" implied="false" onDeleteCascade="true" schema="athd" table="t_lgmt_etude"/>
             <parent column="lgmt_id" foreignKey="t_logement_piquetage_lgmt_id_fkey" implied="false" onDeleteCascade="true" schema="athd" table="t_lgmt"/>
@@ -3015,7 +3045,7 @@
             <column ascending="true" name="geom"/>
          </index>
       </table>
-      <table name="t_pt" numRows="200804" remarks="Configuration :  Table mère contenant l'ensemble des points techniques" schema="athd" type="TABLE">
+      <table name="t_pt" numRows="205458" remarks="Configuration :  Table mère contenant l'ensemble des points techniques" schema="athd" type="TABLE">
          <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="pt_id" nullable="false" remarks="" size="10" type="int4" typeCode="4">
             <child column="pt_id" foreignKey="t_bo_pt_id_fkey" implied="false" onDeleteCascade="true" schema="athd" table="t_bo"/>
             <child column="pt_id" foreignKey="pt_aiguillage_pt_id_fkey" implied="false" onDeleteCascade="true" schema="athd" table="t_pt_aiguillage"/>
@@ -3049,7 +3079,7 @@
             <column ascending="true" name="geom"/>
          </index>
       </table>
-      <table name="t_pt_aiguillage" numRows="2289" remarks="Configuration : Points techniques à traiter en aiguillage" schema="athd" type="TABLE">
+      <table name="t_pt_aiguillage" numRows="2378" remarks="Configuration : Points techniques à traiter en aiguillage" schema="athd" type="TABLE">
          <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="pt_id" nullable="false" remarks="" size="10" type="int4" typeCode="4">
             <parent column="pt_id" foreignKey="pt_aiguillage_pt_id_fkey" implied="false" onDeleteCascade="true" schema="athd" table="t_pt"/>
          </column>
@@ -3325,7 +3355,7 @@
             <column ascending="true" name="geom"/>
          </index>
       </table>
-      <table name="t_pt_piquetage" numRows="28485" remarks="Configuration : Points techniques à traiter en piquetage" schema="athd" type="TABLE">
+      <table name="t_pt_piquetage" numRows="30171" remarks="Configuration : Points techniques à traiter en piquetage" schema="athd" type="TABLE">
          <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="pt_id" nullable="false" remarks="" size="10" type="int4" typeCode="4">
             <parent column="pt_id" foreignKey="pt_piquetage_pt_id_fkey" implied="false" onDeleteCascade="true" schema="athd" table="t_pt"/>
          </column>
@@ -3476,7 +3506,7 @@
             <column ascending="true" name="reference"/>
          </index>
       </table>
-      <table name="t_suivi_blocage" numRows="23" remarks="Configuration : Suivi des zones de blocage" schema="athd" type="TABLE">
+      <table name="t_suivi_blocage" numRows="24" remarks="Configuration : Suivi des zones de blocage" schema="athd" type="TABLE">
          <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="id_blocage" nullable="false" remarks="" size="10" type="int4" typeCode="4">
             <child column="id_blocage" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="athd" table="suivi_blocage"/>
          </column>
@@ -3565,7 +3595,7 @@
             <column ascending="true" name="artere"/>
          </index>
       </table>
-      <table name="t_suivi_comp_releve" numRows="65" remarks="Configuration : Suivi des compléments de relevé (piquetage, RBAL, aiguillage, etc)" schema="athd" type="TABLE">
+      <table name="t_suivi_comp_releve" numRows="72" remarks="Configuration : Suivi des compléments de relevé (piquetage, RBAL, aiguillage, etc)" schema="athd" type="TABLE">
          <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="comp_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="zpm" nullable="true" remarks="" size="2147483647" type="varchar" typeCode="12"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="date_affectation" nullable="true" remarks="" size="13" type="date" typeCode="91"/>
@@ -3701,7 +3731,7 @@
             <column ascending="true" name="geom"/>
          </index>
       </table>
-      <table name="t_zpa_etude" numRows="308" remarks="Configuration : ZPA utilisées en étude" schema="athd" type="TABLE">
+      <table name="t_zpa_etude" numRows="311" remarks="Configuration : ZPA utilisées en étude" schema="athd" type="TABLE">
          <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="zpa_id" nullable="false" remarks="" size="10" type="int4" typeCode="4">
             <parent column="zpa_id" foreignKey="t_zpa_etude_zpa_id_fkey" implied="false" onDeleteCascade="true" schema="athd" table="t_zpa"/>
          </column>

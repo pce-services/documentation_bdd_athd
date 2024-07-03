@@ -73,7 +73,7 @@
             <div class="content-wrapper">
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
-                    <h1>t_bo_etude</h1><p><span id="recordNumber">969</span> rows</p><br />
+                    <h1>t_bo_etude</h1><p><span id="recordNumber">984</span> rows</p><br />
                     <div class="box box-primary">
                         <div class="box-header with-border">
                             <i class="fa fa-file-text-o"></i>
@@ -130,6 +130,11 @@
                                     <td>null</td>
                                     <td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
+                                            <tr>
+                                                <td title="t_bo_fiabilisation_etude.bo_id references t_bo_etude.bo_id via t_bo_fiabilisation_etude_bo_id_fkey"><a href='t_bo_fiabilisation_etude.html'>t_bo_fiabilisation_etude</a><span class='relatedKey'>.bo_id</span></td>
+                                                <td class="constraint detail">t_bo_fiabilisation_etude_bo_id_fkey</td>
+                                                <td class="constraint detail"><span title='Cascade on delete:&#10;Deletion of parent deletes child'>C</span></td>
+                                            </tr>
                                             <tr>
                                                 <td title="t_bo_fiabilisation_exi.bo_id references t_bo_etude.bo_id via t_bo_fiabilisation_exi_bo_id_fkey"><a href='t_bo_fiabilisation_exi.html'>t_bo_fiabilisation_exi</a><span class='relatedKey'>.bo_id</span></td>
                                                 <td class="constraint detail">t_bo_fiabilisation_exi_bo_id_fkey</td>
@@ -926,10 +931,11 @@
                                 <div class="tab-content no-padding">
                                     <div class="chart tab-pane active" id="oneDegreeImg-chart" style="position: relative; overflow-x:auto;">
                                         <map id="oneDegreeRelationshipsDiagram" name="oneDegreeRelationshipsDiagram">
-<area shape="rect" id="node1" href="t_bo_etude.html" target="_top" title="t_bo_etude" alt="" coords="215,84,483,1415">
-<area shape="rect" id="node2" href="t_bo.html" target="_top" title="t_bo" alt="" coords="5,87,171,209">
-<area shape="rect" id="node3" href="t_bo_fiabilisation_exi.html" target="_top" title="t_bo_fiabilisation_exi" alt="" coords="527,5,763,123">
-<area shape="rect" id="node4" href="t_hub.html" target="_top" title="t_hub" alt="" coords="566,140,723,292">
+<area shape="rect" id="node1" href="t_bo_etude.html" target="_top" title="t_bo_etude" alt="" coords="215,137,483,1468">
+<area shape="rect" id="node2" href="t_bo.html" target="_top" title="t_bo" alt="" coords="5,140,171,263">
+<area shape="rect" id="node3" href="t_bo_fiabilisation_etude.html" target="_top" title="t_bo_fiabilisation_etude" alt="" coords="527,5,783,123">
+<area shape="rect" id="node4" href="t_bo_fiabilisation_exi.html" target="_top" title="t_bo_fiabilisation_exi" alt="" coords="537,140,773,257">
+<area shape="rect" id="node5" href="t_hub.html" target="_top" title="t_hub" alt="" coords="576,275,733,427">
 </map>
                                         <a name='diagram'><img id="oneDegreeImg" src="../diagrams/tables/t_bo_etude.1degree.png" usemap="#oneDegreeRelationshipsDiagram" class="diagram" border="0" align="left"></a>
                                     </div>
@@ -939,12 +945,13 @@
 <area shape="rect" id="node2" href="t_pt.html" target="_top" title="t_pt" alt="" coords="5,869,175,957">
 <area shape="rect" id="node3" href="t_bo_client.html" target="_top" title="t_bo_client" alt="" coords="483,5,641,93">
 <area shape="rect" id="node4" href="t_bo_etude.html" target="_top" title="t_bo_etude" alt="" coords="428,111,696,1441">
-<area shape="rect" id="node5" href="t_bo_fiabilisation_exi.html" target="_top" title="t_bo_fiabilisation_exi" alt="" coords="740,113,976,231">
-<area shape="rect" id="node6" href="t_bo_georeso.html" target="_top" title="t_bo_georeso" alt="" coords="473,1564,651,1652">
-<area shape="rect" id="node7" href="t_bo_travaux.html" target="_top" title="t_bo_travaux" alt="" coords="476,1669,648,1757">
-<area shape="rect" id="node8" href="t_hub.html" target="_top" title="t_hub" alt="" coords="779,823,937,975">
-<area shape="rect" id="node9" href="t_lgmt_etude.html" target="_top" title="t_lgmt_etude" alt="" coords="476,1459,648,1547">
-<area shape="rect" id="node10" href="t_hub_etude.html" target="_top" title="t_hub_etude" alt="" coords="1020,825,1188,913">
+<area shape="rect" id="node5" href="t_bo_fiabilisation_etude.html" target="_top" title="t_bo_fiabilisation_etude" alt="" coords="740,47,996,164">
+<area shape="rect" id="node6" href="t_bo_fiabilisation_exi.html" target="_top" title="t_bo_fiabilisation_exi" alt="" coords="750,181,986,299">
+<area shape="rect" id="node7" href="t_bo_georeso.html" target="_top" title="t_bo_georeso" alt="" coords="473,1564,651,1652">
+<area shape="rect" id="node8" href="t_bo_travaux.html" target="_top" title="t_bo_travaux" alt="" coords="476,1669,648,1757">
+<area shape="rect" id="node9" href="t_hub.html" target="_top" title="t_hub" alt="" coords="789,823,947,975">
+<area shape="rect" id="node10" href="t_lgmt_etude.html" target="_top" title="t_lgmt_etude" alt="" coords="476,1459,648,1547">
+<area shape="rect" id="node11" href="t_hub_etude.html" target="_top" title="t_hub_etude" alt="" coords="1040,825,1208,913">
 </map>
                                         <a name='diagram'><img id="twodegreesDegreeImg" src="../diagrams/tables/t_bo_etude.2degrees.png" usemap="#twoDegreesRelationshipsDiagram" class="diagram" border="0" align="left"></a>
                                     </div>
