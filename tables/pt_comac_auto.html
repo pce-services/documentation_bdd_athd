@@ -84,7 +84,33 @@
                             </div>
                         </div><!-- /.box-header -->
                         <div class="box-body clearfix">
-                            <p>Détermine le reste à faire en Comac</p>
+                            <h3>Description</h3>
+                            <p>Cette vue permet de générer automatiquement la liste de calculs Comac à réaliser. Une fois cette liste générée, elle la comparée à la production : ensemble des calculs Comac déposés dans la table comac.</p>
+                            <h3>Contexte</h3>
+                                <ul>
+                                    <li>pt_piquetage : Ensemble des points techniques relevés sur le terrain. Un appuis à calculer est donc obligatoirement issue de pt_piquetage. Chacun d'eux est défini par un identifiant unique appelé pt_id</li>
+                                    <li>pt_etude : Ensemble des points techniques utilisés en étude.</li>
+                                    <li>Les calculs Comac sont obligatoire pour tous les appuis ENEDIS et AODE issus de pt_etude</li>
+                                </ul>
+                            <h3>Construction de la vue</h3>
+                            <p>Pour chaque appui dans la vue pt_etude :
+                                <ul>
+                                    <li>Vérifier si le gestionnaire est ENEDIS ou AODE. Si oui : conserver le pt. Si non : passer au suivant.</li>
+                                    <li>Récupérer les photos de piquetage associées</li>
+                                    <li>Vérifier si le <b>pt_id</b> existe dans la table comac</li>
+                                </ul>
+                            </p>
+                            <h3>Résolution d'erreur</h3>
+                            <p>Voici les points à controler en cas d'erreur :
+                                <ul>
+                                    <li>Le pt_id notifié dans pt_comac_auto et dans la table comac sont strictement identique.</li>
+                                    <li>Le champ zpm de la table comac est strictement égal au nommage du zpm dans la couche zpm_etude</li>
+                                    <li>Le nommage du point technique pt_etude n'existe pas en doublon dans la couche pt_etude</li>
+                                    <li>Rafraichir la vue</li>
+                                </ul>
+                            </p>
+                            <h3>Diagramme</h3>
+                            <iframe src="https://viewer.diagrams.net/#G1Mq1ADcwfznXvQX7lEEYjq4GXPxeeMeGH#%7B%22pageId%22%3A%22OcLpllVQhMQxWw62_ivH%22%7D" width="100%" height="800px" frameborder="0"></iframe>
                         </div><!-- /.box-body -->
                     </div>
                 </section>
