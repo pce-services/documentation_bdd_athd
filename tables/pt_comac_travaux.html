@@ -84,7 +84,79 @@
                             </div>
                         </div><!-- /.box-header -->
                         <div class="box-body clearfix">
-                            <p>Appuis calculés via Comac nécessitants un doublement</p>
+                            <h3>Description</h3>
+                            <p>Cette vue permet d'identifier tous les appuis ENEDIS et AODE nécessitants un dédoublement et les implantations comac supplémentaires (cas d'implantation sans calcul NOK).<br>Elle permet aussi d'associer ces appuis à leur poteau de remplacement. Pour cela, il est nécessaire de créer l'appui de destination dans la table pt_projection_gc, l'ajouter à pt_etude puis renseigner son pt_id dans le champ pt_id_doublement de cette vue. Cela permettra alors l'association des deux appuis.</p>
+                            <h3>Contexte</h3>
+                                <ul>
+                                    <li>pt_comac_auto : Liste automatique de tous les appuis ENEDIS et AODE utilisés en étude</li>
+                                    <li>comac : Table contenant tous les calculs Comac réalisé</li>
+                                    <li>pt_etude : Contient tous les points techniques utilisés en étude</li>
+                                </ul>
+                            <h3>Construction de la vue</h3>
+                            <p>Pour tous les appuis présents dans pt_comac_auto :
+                                <ul>
+                                    <li>Vérifier si le calculs est réalisé en vérifiant la présence du pt_id dans la table comac</li>
+                                    <li>Récupérer l'appui si le taux d'utilisation est supérieur a 100</li>
+                                </ul>
+                            Pour tous les appuis présents dans pt_etude :
+                                <ul>
+                                    <li>Récupérer l'appui si pt_prop = 'RAUV' / pt_gest = 'ATHD' / pt_avct = 'C' / pt_comment contient 'IMPLANTATION COMAC SUPPLEMENTAIRE'</li>
+                                </ul>
+                            </p>
+                            <h3>Conditions d'édition</h3>
+                            <table border="1">
+                                <tr>
+                                    <td><b>Droit</b></td>
+                                    <td><b>Etat</b></td>
+                                    <td><b>Explication</b></td>
+                                </tr>
+                                <tr>
+                                    <td>Lecture</td>
+                                    <td>✔</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>Modification attributaire</td>
+                                    <td>✔</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>Modification geométrique</td>
+                                    <td>✘</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>Création d'entité</td>
+                                    <td>✘</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>Ajout d'entité</td>
+                                    <td>✘</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>Suppression</td>
+                                    <td>✘</td>
+                                    <td></td>
+                                </tr>
+                            </table>
+                            <p>La modification de cette vue se réalise indirectement :</p>
+                            <ul>
+                                <li>La suppression ou l'ajout d'entité dans pt_etude</li>
+                                <li>La complétude d'un pt_etude en suivant les consignes pt_prop = 'RAUV' / pt_gest = 'ATHD' / pt_avct = 'C' / pt_comment contient 'IMPLANTATION COMAC SUPPLEMENTAIRE'</li>
+                                <li>L'ajout ou la suppresion d'un résultat de calcul dans la table comac</li>
+                            </ul>
+                            <h3>Résolution d'erreur</h3>
+                            <p>Voici les points à controler en cas d'erreur :
+                                <ul>
+                                    <li>Le champ correspondance_comac est coché dans pt_comac_auto. Sinon, voir dans les explications de pt_comac_auto</li>
+                                    <li>Le résultat dans la table comac est supérieur à 100</li>
+                                    <li>En cas d'implantation supérieur, le pt_etude est complété en respectant les conditions pt_prop = 'RAUV' / pt_gest = 'ATHD' / pt_avct = 'C' / pt_comment contient 'IMPLANTATION COMAC SUPPLEMENTAIRE'</li>
+                                </ul>
+                            </p>
+                            <h3>Diagramme</h3>
+                            <iframe src="https://viewer.diagrams.net/#G1Mq1ADcwfznXvQX7lEEYjq4GXPxeeMeGH#%7B%22pageId%22%3A%224o5LS7PFK6UOBsHqq08o%22%7D" width="100%" height="800px" frameborder="0"></iframe>
                         </div><!-- /.box-body -->
                     </div>
                 </section>
