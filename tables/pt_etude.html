@@ -99,14 +99,43 @@
                                     <li>Pour chaque pt_id de cette liste : récupérer la géométrie, le nom, le gestionnaire, le code insee et la structure dans t_pt</li>
                                 </ul>
                             <h3>Conditions d'édition</h3>
-                            <ul>
-                                <li>Lecture : Oui</li>
-                                <li>Modification attributaire : Oui</li>
-                                <li>Modification geométrique : Non</li>
-                                <li>Création d'entité : Non</li>
-                                <li>Ajout d'entité : Oui, provenant de pt_piquetage / pt_aiguillage / pt_projection_gc</li>
-                                <li>Suppression : Non</li>
-                            </ul>
+                            <table border="1">
+                                <tr>
+                                    <td>Droit</td>
+                                    <td>Etat</td>
+                                    <td>Explication</td>
+                                </tr>
+                                <tr>
+                                    <td>Lecture</td>
+                                    <td>✔</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>Modification attributaire</td>
+                                    <td>✔</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>Modification geométrique</td>
+                                    <td>✘</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>Création d'entité</td>
+                                    <td>✘</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>Ajout d'entité</td>
+                                    <td>✔</td>
+                                    <td>Provenant de pt_piquetage / pt_aiguillage / pt_projection_gc</td>
+                                </tr>
+                                <tr>
+                                    <td>Suppression</td>
+                                    <td>✔</td>
+                                    <td>Supression de l'entité, sans suppression de l'origine</td>
+                                </tr>
+                            </table>
                             <h3>Résolution d'erreur</h3>
                             <p>Voici les points à controler en cas d'erreur :
                                 <ul>
