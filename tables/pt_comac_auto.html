@@ -85,75 +85,73 @@
                         </div><!-- /.box-header -->
                         <div class="box-body clearfix">
                             <h3>Description</h3>
-                            <p>Cette vue permet de générer automatiquement la liste de calculs Comac à réaliser. Une fois cette liste générée, elle la comparée à la production : ensemble des calculs Comac déposés dans la table comac.</p>
-                            <h3>Contexte</h3>
+                                <p>Cette vue permet de générer automatiquement la liste de calculs Comac à réaliser. Une fois cette liste générée, elle est comparée à la production : ensemble des calculs Comac déposés dans la table comac.</p>
+                                <h3>Contexte</h3>
                                 <ul>
-                                    <li>pt_piquetage : Ensemble des points techniques relevés sur le terrain. Un appuis à calculer est donc obligatoirement issue de pt_piquetage. Chacun d'eux est défini par un identifiant unique appelé pt_id</li>
+                                    <li>pt_piquetage : Ensemble des points techniques relevés sur le terrain. Un appui à calculer est donc obligatoirement issu de pt_piquetage. Chacun d'eux est défini par un identifiant unique appelé pt_id.</li>
                                     <li>pt_etude : Ensemble des points techniques utilisés en étude.</li>
-                                    <li>Les calculs Comac sont obligatoire pour tous les appuis ENEDIS et AODE issus de pt_etude</li>
+                                    <li>Les calculs Comac sont obligatoires pour tous les appuis ENEDIS et AODE issus de pt_etude.</li>
                                 </ul>
-                            <h3>Construction de la vue</h3>
-                            <p>Pour chaque appui dans la vue pt_etude :
+                                <h3>Construction de la vue</h3>
+                                <p>Pour chaque appui dans la vue pt_etude :</p>
                                 <ul>
                                     <li>Vérifier si le gestionnaire est ENEDIS ou AODE. Si oui : conserver le pt. Si non : passer au suivant.</li>
-                                    <li>Récupérer les photos de piquetage associées</li>
-                                    <li>Vérifier si le <b>pt_id</b> existe dans la table comac</li>
+                                    <li>Récupérer les photos de piquetage associées.</li>
+                                    <li>Vérifier si le <b>pt_id</b> existe dans la table comac.</li>
                                 </ul>
-                            </p>
-                            <h3>Conditions d'édition</h3>
-                            <table border="1">
-                                <tr>
-                                    <td><b>Droit</b></td>
-                                    <td><b>Etat</b></td>
-                                    <td><b>Explication</b></td>
-                                </tr>
-                                <tr>
-                                    <td>Lecture</td>
-                                    <td>✔</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>Modification attributaire</td>
-                                    <td>✘</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>Modification geométrique</td>
-                                    <td>✘</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>Création d'entité</td>
-                                    <td>✘</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>Ajout d'entité</td>
-                                    <td>✘</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>Suppression</td>
-                                    <td>✘</td>
-                                    <td></td>
-                                </tr>
-                            </table>
-                            <p>La modification de cette vue se réalise indirectement :</p>
-                            <ul>
-                                <li>Ajouter ou supprimer des éléments dans l'étude peut ajouter ou supprimer des besoins en calcul Comac</li>
-                                <li>Modifier des éléments d'étude peut changer le nom des points techniques, etc...</li>
-                                <li>Modifier la table comac peut cocher ou décocher la case correspondance_comac</li>
-                            </ul>
-                            <h3>Résolution d'erreur</h3>
-                            <p>Voici les points à controler en cas d'erreur :
+                                <h3>Conditions d'édition</h3>
+                                <table border="1">
+                                    <tr>
+                                        <td><b>Droit</b></td>
+                                        <td><b>État</b></td>
+                                        <td><b>Explication</b></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Lecture</td>
+                                        <td>✔</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Modification attributaire</td>
+                                        <td>✘</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Modification géométrique</td>
+                                        <td>✘</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Création d'entité</td>
+                                        <td>✘</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Ajout d'entité</td>
+                                        <td>✘</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Suppression</td>
+                                        <td>✘</td>
+                                        <td></td>
+                                    </tr>
+                                </table>
+                                <p>La modification de cette vue se réalise indirectement par :</p>
                                 <ul>
-                                    <li>Le pt_id notifié dans pt_comac_auto et dans la table comac sont strictement identique.</li>
-                                    <li>Le champ zpm de la table comac est strictement égal au nommage du zpm dans la couche zpm_etude</li>
-                                    <li>Le nommage du point technique pt_etude n'existe pas en doublon dans la couche pt_etude</li>
-                                    <li>Le pt_id existe dans pt_etude</li>
-                                    <li>Rafraichir la vue</li>
+                                    <li>L'ajout ou suppression d'éléments dans l'étude.</li>
+                                    <li>La modification d'éléments d'étude.</li>
+                                    <li>La modification de la table comac.</li>
                                 </ul>
-                            </p>
+                                <h3>Résolution d'erreur</h3>
+                                <p>Voici les points à contrôler en cas d'erreur :</p>
+                                <ul>
+                                    <li>Le pt_id notifié dans pt_comac_auto et dans la table comac sont strictement identiques.</li>
+                                    <li>Le champ zpm de la table comac est strictement égal au nommage du zpm dans la couche zpm_etude.</li>
+                                    <li>Le nommage du point technique pt_etude n'existe pas en doublon dans la couche pt_etude.</li>
+                                    <li>Le pt_id existe dans pt_etude.</li>
+                                    <li>Rafraîchir la vue.</li>
+                                </ul>
                             <h3>Diagramme</h3>
                             <iframe src="https://viewer.diagrams.net/#G1Mq1ADcwfznXvQX7lEEYjq4GXPxeeMeGH#%7B%22pageId%22%3A%22OcLpllVQhMQxWw62_ivH%22%7D" width="100%" height="800px" frameborder="0"></iframe>
                         </div><!-- /.box-body -->

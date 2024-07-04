@@ -85,27 +85,26 @@
                         </div><!-- /.box-header -->
                         <div class="box-body clearfix">
                             <h3>Description</h3>
-                            <p>Cette vue permet de générer automatiquement une commande d'accès en fonction des études. Une fois cette commande d'accès générée, elle la comparée à la production : commandes d'accès enregistrées dans la table ca.</p>
+                            <p>Cette vue permet de générer automatiquement une commande d'accès en fonction des études. Une fois cette commande d'accès générée, elle est comparée à la production : commandes d'accès enregistrées dans la table ca.</p>
                             <h3>Contexte</h3>
-                                <ul>
-                                    <li>cm : Chemin / tronçon entre les points techniques. Chaque cm comporte un identifiant unique appelé cm_id</li>
-                                    <li>cb : Cable optique. Chaque cb est défini par une liste de cm_id. La géométrie du cb est donc généré par le groupement des géométries de chaque cm le composant</li>
-                                    <li>Une commande d'accès comporte les cm Orange utilisés en étude, multiplié par le nombre de câble. Si 3 câbles passent par un seul cm, ce dernier doit apparaitre 3 fois dans la C3A.</li>
-                                </ul>
+                            <ul>
+                                <li>cm : Chemin / tronçon entre les points techniques. Chaque cm comporte un identifiant unique appelé cm_id.</li>
+                                <li>cb : Câble optique. Chaque cb est défini par une liste de cm_id. La géométrie du cb est donc générée par le groupement des géométries de chaque cm le composant.</li>
+                                <li>Une commande d'accès comporte les cm Orange utilisés en étude, multipliés par le nombre de câbles. Si 3 câbles passent par un seul cm, ce dernier doit apparaître 3 fois dans la C3A.</li>
+                            </ul>
                             <h3>Construction de la vue</h3>
-                            <p>Pour chaque cm_id constituant un câble présent dans cb_etude :
-                                <ul>
-                                    <li>Récupérer le pt_etude amont et pt_etude aval</li>
-                                    <li>Vérifier si un des deux pt_etude à un gestionnaire Orange. Si oui : conserver le cm. Si non : passer au suivant.</li>
-                                    <li>Définir les type de pt_etude (C, CT, P, PT ...) ainsi que le diamètre, la longueur, et le commentaire (nom du cable)</li>
-                                    <li>Vérifier si l'association <b>pt_id_a / pt_id_b / commentaire</b> existe dans la table ca</li>
-                                </ul>
-                            </p>
+                            <p>Pour chaque cm_id constituant un câble présent dans cb_etude :</p>
+                            <ul>
+                                <li>Récupérer le pt_etude amont et pt_etude aval.</li>
+                                <li>Vérifier si un des deux pt_etude a un gestionnaire Orange. Si oui : conserver le cm. Si non : passer au suivant.</li>
+                                <li>Définir les types de pt_etude (C, CT, P, PT ...) ainsi que le diamètre, la longueur, et le commentaire (nom du câble).</li>
+                                <li>Vérifier si l'association <b>pt_id_a / pt_id_b / commentaire</b> existe dans la table ca.</li>
+                            </ul>
                             <h3>Conditions d'édition</h3>
                             <table border="1">
                                 <tr>
                                     <td><b>Droit</b></td>
-                                    <td><b>Etat</b></td>
+                                    <td><b>État</b></td>
                                     <td><b>Explication</b></td>
                                 </tr>
                                 <tr>
@@ -119,7 +118,7 @@
                                     <td></td>
                                 </tr>
                                 <tr>
-                                    <td>Modification geométrique</td>
+                                    <td>Modification géométrique</td>
                                     <td>✘</td>
                                     <td></td>
                                 </tr>
@@ -141,19 +140,18 @@
                             </table>
                             <p>La modification de cette vue se réalise indirectement :</p>
                             <ul>
-                                <li>Ajouter ou supprimer des éléments dans l'étude peut ajouter ou supprimer des tronçons suivant le besoin en C3A</li>
-                                <li>Modifier des éléments d'étude peut changer le commentaire, la longueur, le nom des points techniques, etc...</li>
-                                <li>Modifier la table ca peut cocher ou décocher la case correspondance_ca</li>
+                                <li>Ajouter ou supprimer des éléments dans l'étude peut ajouter ou supprimer des tronçons suivant le besoin en C3A.</li>
+                                <li>Modifier des éléments d'étude peut changer le commentaire, la longueur, le nom des points techniques, etc.</li>
+                                <li>Modifier la table ca peut cocher ou décocher la case correspondance_ca.</li>
                             </ul>
                             <h3>Résolution d'erreur</h3>
-                            <p>Voici les points à controler en cas d'erreur ou correspondance ca invalide :
-                                <ul>
-                                    <li>Correspondance pt_id_a et pt_id_b identique dans ca et cm_ca_auto. Inversion de sens interdite.</li>
-                                    <li>Le commentaire de la ca doit être égal à cb_code de la table cb_etude (par conséquent, égal à la colonne commentaire de cm_ca_auto)</li>
-                                    <li>Un erreur de géométrie dans l'étude : Un cm non accroché à un pt, une géométrie de câble invalide, etc</li>
-                                    <li>Rafraichir la vue</li>
-                                </ul>
-                            </p>
+                            <p>Voici les points à contrôler en cas d'erreur ou correspondance ca invalide :</p>
+                            <ul>
+                                <li>Correspondance pt_id_a et pt_id_b identique dans ca et cm_ca_auto. Inversion de sens interdite.</li>
+                                <li>Le commentaire de la ca doit être égal à cb_code de la table cb_etude (par conséquent, égal à la colonne commentaire de cm_ca_auto).</li>
+                                <li>Une erreur de géométrie dans l'étude : Un cm non accroché à un pt, une géométrie de câble invalide, etc.</li>
+                                <li>Rafraîchir la vue.</li>
+                            </ul>
                             <h3>Diagramme</h3>
                             <iframe src="https://viewer.diagrams.net/#G1Mq1ADcwfznXvQX7lEEYjq4GXPxeeMeGH#%7B%22pageId%22%3A%22mqdnWnFN51zdIfKBTBxs%22%7D" width="100%" height="800px" frameborder="0"></iframe>
 

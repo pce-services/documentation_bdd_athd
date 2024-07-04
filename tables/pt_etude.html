@@ -85,24 +85,24 @@
                         </div><!-- /.box-header -->
                         <div class="box-body clearfix">
                             <h3>Description</h3>
-                            <p>Cette vue permet d'ajouter et supprimer des points techniques étude. Il s'agit d'une sélection parmis les 3 couches présentées dans le contexte ci-dessous.</p>
+                            <p>Cette vue permet d'ajouter et de supprimer des points techniques en étude. Il s'agit d'une sélection parmi les 3 couches présentées dans le contexte ci-dessous.</p>
                             <h3>Contexte</h3>
-                                <ul>
-                                    <li>pt_piquetage : Ensemble des point techniques à traiter en piquetage</li>
-                                    <li>pt_aiguillage : Ensemble des point techniques à traiter en aiguillage</li>
-                                    <li>pt_projection_gc : Ensemble des points techniques à créer, donc inexistants sur le terrain avnt travaux PCE</li>
-                                </ul>
-                            <p>Pour des raisons de cohérence, seul des points techniques fiabilisés (ou demandé en fiabilisation) en piquetage / aiguillage sont utilisable dans l'étude. Si un point technique inexstant est nécessaire, il doit être explicitement indiqué comme tel, par sa présence dans la couche pt_projection_gc</p>
+                            <ul>
+                                <li>pt_piquetage : Ensemble des points techniques à traiter en piquetage</li>
+                                <li>pt_aiguillage : Ensemble des points techniques à traiter en aiguillage</li>
+                                <li>pt_projection_gc : Ensemble des points techniques à créer, donc inexistants sur le terrain avant travaux PCE</li>
+                            </ul>
+                            <p>Pour des raisons de cohérence, seuls des points techniques fiabilisés (ou demandés en fiabilisation) en piquetage / aiguillage sont utilisables dans l'étude. Si un point technique inexistant est nécessaire, il doit être explicitement indiqué comme tel, par sa présence dans la couche pt_projection_gc.</p>
                             <h3>Construction de la vue</h3>
-                                <ul>
-                                    <li>La couche t_pt_etude stocke la liste des pt_id à afficher ainsi que les champs etude rattaché</li>
-                                    <li>Pour chaque pt_id de cette liste : récupérer la géométrie, le nom, le gestionnaire, le code insee et la structure dans t_pt</li>
-                                </ul>
+                            <ul>
+                                <li>La couche t_pt_etude stocke la liste des pt_id à afficher ainsi que les champs étude rattachés</li>
+                                <li>Pour chaque pt_id de cette liste : récupérer la géométrie, le nom, le gestionnaire, le code INSEE et la structure dans t_pt</li>
+                            </ul>
                             <h3>Conditions d'édition</h3>
                             <table border="1">
                                 <tr>
                                     <td><b>Droit</b></td>
-                                    <td><b>Etat</b></td>
+                                    <td><b>État</b></td>
                                     <td><b>Explication</b></td>
                                 </tr>
                                 <tr>
@@ -116,7 +116,7 @@
                                     <td></td>
                                 </tr>
                                 <tr>
-                                    <td>Modification geométrique</td>
+                                    <td>Modification géométrique</td>
                                     <td>✘</td>
                                     <td></td>
                                 </tr>
@@ -133,15 +133,14 @@
                                 <tr>
                                     <td>Suppression</td>
                                     <td>✔</td>
-                                    <td>Supression de l'entité, sans suppression de l'origine</td>
+                                    <td>Suppression de l'entité, sans suppression de l'origine</td>
                                 </tr>
                             </table>
                             <h3>Résolution d'erreur</h3>
-                            <p>Voici les points à controler en cas d'erreur :
-                                <ul>
-                                    <li>Le pt_id référencé existe dans une des couches pt_piquetage / pt_aiguillage / pt_projection_gc.</li>
-                                </ul>
-                            </p>
+                            <p>Voici les points à contrôler en cas d'erreur :</p>
+                            <ul>
+                                <li>Le pt_id référencé existe dans une des couches pt_piquetage / pt_aiguillage / pt_projection_gc.</li>
+                            </ul>
                             <h3>Diagramme</h3>
                             <iframe src="https://viewer.diagrams.net/#G1Mq1ADcwfznXvQX7lEEYjq4GXPxeeMeGH#%7B%22pageId%22%3A%220nOi1mpqOQQLqwKUCL2z%22%7D" width="100%" height="800px" frameborder="0"></iframe>
                         </div><!-- /.box-body -->
