@@ -84,7 +84,71 @@
                             </div>
                         </div><!-- /.box-header -->
                         <div class="box-body clearfix">
-                            <p>Appuis calculés via Capft nécessitants des travaux</p>
+                            <h3>Description</h3>
+                            <p>Cette vue permet d'identifier tous les appuis ORANGE nécessitant un remplacement, un renforcement ou un recalage et de suivre les travaux</p>
+                            <h3>Contexte</h3>
+                            <ul>
+                                <li>pt_capft_auto : Liste automatique de tous les appuis ORANGE utilisés en étude</li>
+                                <li>capft : Table contenant tous les calculs Capft réalisés</li>
+                                <li>pt_etude : Contient tous les points techniques utilisés en étude</li>
+                            </ul>
+                            <h3>Construction de la vue</h3>
+                            <p>Pour tous les appuis présents dans pt_capft_auto :</p>
+                            <ul>
+                                <li>Vérifier si le calcul est réalisé en vérifiant la présence du pt_id dans la table capft</li>
+                                <li>Récupérer l'appui si le champ nature_travaux = Remplacement ou Renforcement ou Recalage</li>
+                            </ul>
+                            <h3>Conditions d'édition</h3>
+                            <table border="1">
+                                <tr>
+                                    <td><b>Droit</b></td>
+                                    <td><b>État</b></td>
+                                    <td><b>Explication</b></td>
+                                </tr>
+                                <tr>
+                                    <td>Lecture</td>
+                                    <td>✔</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>Modification attributaire</td>
+                                    <td>✔</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>Modification géométrique</td>
+                                    <td>✘</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>Création d'entité</td>
+                                    <td>✘</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>Ajout d'entité</td>
+                                    <td>✘</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>Suppression</td>
+                                    <td>✘</td>
+                                    <td></td>
+                                </tr>
+                            </table>
+                            <p>La modification de cette vue se réalise indirectement par :</p>
+                            <ul>
+                                <li>La suppression ou l'ajout d'entité dans pt_etude</li>
+                                <li>L'ajout ou la suppression d'un résultat de calcul dans la table capft</li>
+                            </ul>
+                            <h3>Résolution d'erreur</h3>
+                            <p>Voici les points à contrôler en cas d'erreur :</p>
+                            <ul>
+                                <li>Le champ correspondance_capft est coché dans pt_capft_auto. Sinon, voir dans les explications de pt_capft_auto</li>
+                                <li>Le champ nature_travaux = Remplacement ou Renforcement ou Recalage dans la table capft</li>
+                            </ul>
+                            <h3>Diagramme</h3>
+                            <iframe src="https://viewer.diagrams.net/#G1Mq1ADcwfznXvQX7lEEYjq4GXPxeeMeGH#%7B%22pageId%22%3A%22vbHXQdJQhYDo1xdUddII%22%7D" width="100%" height="800px" frameborder="0"></iframe>
                         </div><!-- /.box-body -->
                     </div>
                 </section>
